@@ -1,0 +1,36 @@
+conda create --name aidruid python=3.7
+
+conda activate aidruid
+
+conda install -c anaconda keras-gpu 
+
+pip install importlib
+pip install pyserial
+
+pip install pyqtwebengine
+pip install pyqtgraph
+pip install PythonQwt
+
+pip install ica
+pip install PyWavelets
+pip install neurodsp
+pip install lspopt
+
+conda install -c conda-forge spectrum 
+pip install pyhrv (Hay que hacer modificaciones en el codigo fuente)
+
+pip install pandas
+
+pip install opencv-python
+
+conda install -c conda-forge pyedflib
+pip install ffmpeg-python
+
+
+conda deactivate 
+
+conda install --name aidruid spyder
+
+
+
+
