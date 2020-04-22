@@ -6,7 +6,7 @@
 @DOI: 10.5281/zenodo.3727503 
 """
 #%%
-from FEATURES.online_features_02 import compute_online_features
+from EEG.FEATURES.online_features_02 import compute_online_features
 from FILTERS.EAWICA import eawica
 from COM.tcpip_dict_client import tcpip_client as client
 from multiprocessing import Process
