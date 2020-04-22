@@ -5,7 +5,7 @@
 @institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
 """
 
-from faced.detector import FaceDetector
+from FER_STRATEGIES.faced.detector import FaceDetector
 import cv2
 import numpy as np
 

@@ -6,7 +6,7 @@
 """
 
 #%%
-from faced.detector import FaceDetector
+from FER_STRATEGIES.faced.detector import FaceDetector
 from tensorflow.compat.v1.keras.models import load_model
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
@@ -24,9 +24,9 @@ def predict_by_ensemble(models, image):
     time_spent = float("{0:.2f}".format((toc - tic) * 1000))
     return prediction, time_spent,ensemble_prediction
 
-conv_pool_cnn_modelA=load_model('./models/conv_pool_cnnA_merged_fer68,74_ck97,42_.h5')
-conv_pool_cnn_modelB=load_model('./models/conv_pool_cnnB_merged_fer67,96_ck96,13_.h5')
-conv_pool_cnn_modelC=load_model('./models/conv_pool_cnnC_merged_fer67,90_ck98,71_.h5')
+conv_pool_cnn_modelA=load_model('./FER_STRATEGIES/models/conv_pool_cnnA_merged_fer68,74_ck97,42_.h5')
+conv_pool_cnn_modelB=load_model('./FER_STRATEGIES/models/conv_pool_cnnB_merged_fer67,96_ck96,13_.h5')
+conv_pool_cnn_modelC=load_model('./FER_STRATEGIES/models/conv_pool_cnnC_merged_fer67,90_ck98,71_.h5')
 
 Model_ABC=[conv_pool_cnn_modelA,conv_pool_cnn_modelB,conv_pool_cnn_modelC]
 
