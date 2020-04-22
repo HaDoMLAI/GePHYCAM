@@ -26,3 +26,6 @@ EDF files.
 Author: Mikel Val Calvo
 Institution: Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED)
 Email: mikel1982mail@gmail.com
+
+# APP:
+![Image description](https://github.com/mikelval82/GePHYCAM/blob/master/images/GePHYCAM.png)
