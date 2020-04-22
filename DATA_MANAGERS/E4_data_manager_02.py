@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Dec 14 15:26:41 2018
-
-@author: UNED
+@author: %(Mikel Val Calvo)s
+@email: %(mikel1982mail@gmail.com)
+@institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
+@DOI: 10.5281/zenodo.3727503 
 """
+#%%
 from DATA_MANAGERS.E4_ring_buffer_02 import RingBuffer as buffer
 from threading import Lock
 import numpy as np

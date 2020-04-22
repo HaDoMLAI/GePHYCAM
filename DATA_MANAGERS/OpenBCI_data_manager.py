@@ -3,7 +3,9 @@
 @author: %(Mikel Val Calvo)s
 @email: %(mikel1982mail@gmail.com)
 @institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
+@DOI: 10.5281/zenodo.3727503 
 """
+#%%
 from DATA_MANAGERS.OpenBCI_ring_buffer_02 import RingBuffer as EEG_buffer
 
 from FILTERS.filter_bank_manager import filter_bank_class

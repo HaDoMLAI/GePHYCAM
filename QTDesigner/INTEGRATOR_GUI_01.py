@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'integrator_gui.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
-
-
+"""
+@author: %(Mikel Val Calvo)s
+@email: %(mikel1982mail@gmail.com)
+@institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
+@DOI: 10.5281/zenodo.3727503 
+"""
+#%%
 from PyQt5 import QtCore, QtGui, QtWidgets
 from QTDesigner.mplwidget import MplWidget
 from qwt.qt.QtCore import Qt

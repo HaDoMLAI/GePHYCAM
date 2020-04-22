@@ -1,10 +1,11 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 @author: %(Mikel Val Calvo)s
 @email: %(mikel1982mail@gmail.com)
 @institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
+@DOI: 10.5281/zenodo.3727503 
 """
+#%%
 from FER_STRATEGIES.fr_system import FR_system
 from COM.tcpip_dict_client import tcpip_client as client
 from multiprocessing import Process

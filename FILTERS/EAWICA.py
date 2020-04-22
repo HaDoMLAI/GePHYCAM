@@ -1,17 +1,14 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 @author: %(Mikel Val Calvo)s
 @email: %(mikel1982mail@gmail.com)
 @institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
+@DOI: 10.5281/zenodo.3727503 
 """
-# entropy
+#%%
 from EEG import entropy
-# filters
 from FILTERS.filter_bank_manager import filter_bank_class
-# infomax based ICA method
 from ica import ica1
-# external common libraries
 from scipy.stats import kurtosis
 from sklearn import preprocessing
 from scipy.stats import zscore
