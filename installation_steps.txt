@@ -1,6 +1,6 @@
-conda create --name aidruid python=3.7
+conda create --name envname python=3.7
 
-conda activate aidruid
+conda activate envname
 
 conda install -c anaconda keras-gpu 
 
@@ -29,7 +29,7 @@ pip install ffmpeg-python
 
 conda deactivate 
 
-conda install --name aidruid spyder
+conda install --name envname spyder
 
 
 
