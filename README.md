@@ -1,4 +1,4 @@
-# DESCRIPTION:
+# GePHYCAM: GENERAL PHYSIOLOGICAL and CAMERA FOR REAL-TIME RECORDINGS AND PROCESSING
 In order to record and collect the data, a self-produced software, GePHYCAM, is
 developed. This application looks forward to being accessible to the whole scientific
 community, providing a resourceful tool for human-behaviour experimental paradigms,
