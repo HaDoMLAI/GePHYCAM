@@ -12,16 +12,9 @@ import numpy as np
 
 class E4_data_manager():
    
-    def __init__(self, signal=None, signal_numbers=None, seconds=None, sample_rate=None):
-        ############### CONSTANTS ######################  
-        self.SIGNAL = signal
-        self.SIGNAL_NUMBERS = signal_numbers
-        self.SECONDS = seconds
-        self.SAMPLE_RATE = sample_rate         
-        self.WINDOW = self.SAMPLE_RATE*self.SECONDS 
-        self.freqTask = self.SAMPLE_RATE
+    def __init__(self, signal=None, num_signals=None, sample_rate=None):
         ############### buffer ########################
-        self.buffer = buffer(channels=self.SIGNAL_NUMBERS+1, num_samples=self.WINDOW, sample_rate=self.SAMPLE_RATE)
+        self.buffer = buffer(signal, sample_rate, num_signals)
         self.allData = np.empty((0, self.buffer.channels))
         ###### mutex lock
         self.mutexBuffer = Lock()       
@@ -31,16 +24,14 @@ class E4_data_manager():
         
     def reset_data_store(self):
         self.allData = np.empty((0, self.buffer.channels))
-        print('reset alldata E4 signal' + self.SIGNAL)
+        print('reset alldata E4 signal' + self.buffer.SIGNAL)
         
     def setWindow(self,seconds):
-        self.mutexBuffer.acquire()
-        self.SECONDS = seconds
-        self.WINDOW = self.SAMPLE_RATE * self.SECONDS
-        self.mutexBuffer.release()
+        self.buffer.SECONDS = seconds
+        self.buffer.WINDOW = self.buffer.SAMPLE_RATE * self.buffer.SECONDS
         
     def getWindow(self):
-        return self.WINDOW
+        return self.buffer.WINDOW
     
     def clearBuffer(self):
         self.mutexBuffer.acquire()

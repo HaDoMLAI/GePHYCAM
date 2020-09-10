@@ -6,23 +6,24 @@
 @DOI: 10.5281/zenodo.3727503 
 """
 #%%
-from PyQt5 import QtCore 
+from DATA_MANAGERS.E4_constants import E4_constants
+#from PyQt5 import QtCore 
 import numpy as np
 
-class RingBuffer(QtCore.QThread):
+class RingBuffer(E4_constants):#QtCore.QThread, 
     """ class that implements a not-yet-full buffer """
-    emitter = QtCore.pyqtSignal()
+#    emitter = QtCore.pyqtSignal()
     
-    def __init__(self, channels=None, num_samples=None, sample_rate = None, parent=None):
-        super(RingBuffer, self).__init__(parent)
-        self.channels = channels
-        self.max = num_samples
+    def __init__(self, signal, sample_rate, num_signals, parent=None):
+#        super(RingBuffer, self).__init__(parent)
+        E4_constants.__init__(self, signal, sample_rate, num_signals)
+        #-------------------------------------
+        self.channels = self.SIGNAL_NUMBERS+1
+        self.max = self.WINDOW
         self.data = np.zeros((self.max, self.channels))
         self.cur = self.max
-        self.sample_rate = sample_rate   
-        self.seconds = 6
-        self.control = self.sample_rate*self.seconds
-         
+        self.control = self.SAMPLE_RATE*self.SECONDS
+   
     def reset(self):
         self.data = np.zeros((self.max, self.channels))
         self.cur = self.max

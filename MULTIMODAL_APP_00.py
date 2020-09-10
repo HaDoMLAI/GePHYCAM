@@ -6,7 +6,6 @@
 @DOI: 10.5281/zenodo.3727503 
 """
 #%%
-from COM.trigger_server_3 import trigger_server
 
 from DRIVERS.EMPATICA_E4 import E4_socket 
 from DRIVERS.OpenBCI import OpenBCIBoard as openBCI
@@ -30,7 +29,7 @@ class MyApp(QtWidgets.QApplication):
     def __init__(self):
         QtWidgets.QApplication.__init__(self,[''])
         # -- CREATE SHARED VARIABLES AND QUEUES ------------
-        self.constants = constants('INTEGRATOR')
+        self.constants = constants()
         # -- shared values for streaming control --
         self.video_streaming = Value('b',0)
         self.BCI_streaming = Value('b',0)
@@ -48,16 +47,15 @@ class MyApp(QtWidgets.QApplication):
                                           self.webcam_connection_manager])  
         # -- CREATE SERVICES ----------------
         self.log = log(self.gui.logger)
-        self.trigger_server = trigger_server(self.constants.ADDRESS, self.constants.PORT)
         # ------------ DRIVERS definitions --------------------        
         #-- OpenBCI DataManager
         self.eeg_dmg = OpenBCI_data_manager(self.eeg_queue)  
         self.eeg_dmg.start()
         # # -- Empatica E4 DataManagers--
         self.E4_dmgs = []
-        self.E4_dmgs.append(E4_data_manager(signal='bvp', signal_numbers=1, seconds=self.constants.BVP_SECONDS, sample_rate=64))
-        self.E4_dmgs.append(E4_data_manager(signal='gsr', signal_numbers=1, seconds=self.constants.GSR_SECONDS, sample_rate=4))
-        self.E4_dmgs.append(E4_data_manager(signal='tmp', signal_numbers=1, seconds=self.constants.TMP_SECONDS, sample_rate=4))
+        self.E4_dmgs.append(E4_data_manager(signal='bvp', num_signals=1, sample_rate=64))
+        self.E4_dmgs.append(E4_data_manager(signal='gsr', num_signals=1, sample_rate=4))
+        self.E4_dmgs.append(E4_data_manager(signal='tmp', num_signals=1, sample_rate=4))
         # -- webcam --
         self.video_dmg = VideoDMG(self.video_queue, self.video_streaming)
         self.video_dmg.start()
@@ -96,9 +94,10 @@ class MyApp(QtWidgets.QApplication):
             self.BCI_driver.kill()
     
     def E4_server_link(self):
-        print('que pasa con connexin E4: ', self.E4_connected.value)
+        print('E4 server link ', not self.E4_connected.value)
         if not self.E4_connected.value:
             try:
+                print('entro')
                 self.E4_driver = E4_socket(self.E4_connected, 
                                            self.E4_dmgs, 
                                            callbacks=[self.gui.device_list_slot,
@@ -106,7 +105,6 @@ class MyApp(QtWidgets.QApplication):
                                                       self.gui.data_pause_slot, 
                                                       self.gui.data_subscribe_slot])  
                 self.E4_driver.set_logger(self.log)
-                print(self.constants.E4_IP, self.constants.E4_PORT)
                 self.E4_driver.openPort(self.constants.E4_IP, self.constants.E4_PORT)
                 self.E4_refresh()
                 self.E4_driver.start()
@@ -153,12 +151,9 @@ class MyApp(QtWidgets.QApplication):
             self.VideoRecorder.kill()
         if self.E4_connected.value:
             self.E4_driver.kill()
-        # -- release tcp/ip sockets -- 
-        if self.trigger_server.activated:
-            self.trigger_server.close_socket()
         # -- system exit --
         sys.exit(ret)
 
-            
-main = MyApp()
-main.execute_gui()
+if __name__ == "__main__":
+    main = MyApp()
+    main.execute_gui()

@@ -12,35 +12,42 @@ import socket
 import sys
 
 class trigger_server(QtCore.QThread):
-    new_COM = QtCore.pyqtSignal(str)
+    socket_emitter = QtCore.pyqtSignal(str)
+    log_emitter = QtCore.pyqtSignal(str)
     
     def __init__(self, address=None, port=None, parent=None):
         super(trigger_server, self).__init__(parent)
         self.address = address
         self.port = port
         self.activated = False
+        
              
     def create_socket(self):
-        self.activated = True
-        # Create a TCP/IP socket
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Bind the socket to the port
-        server_address = (self.address, self.port)
-        print(sys.stderr, 'starting up on %s port %s' % server_address)
-        self.sock.bind(server_address)
+        try:
+            # Create a TCP/IP socket
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # Bind the socket to the port
+            self.server_address = (self.address, self.port)
+            self.sock.bind(self.server_address)
+            self.activated = True
+            self.log_emitter.emit(' starting up on %s port %s' % self.server_address)
+        except socket.gaierror:
+            self.log_emitter.emit('[Errno -2] Unknown name or service')
+        finally:
+            return self.activated
         
     
     def run(self):
         # Listen for incoming connections
-        print('socket is listening!')
+        self.log_emitter.emit('Socket is listening!')
         self.sock.listen(1)
-        print('is socket activated? ', self.activated)
         while self.activated:
-            print(sys.stderr, 'waiting for a connection')
+            self.log_emitter.emit('Waiting for a connection')
             try:
                 self.connection, client_address = self.sock.accept()
+                self.log_emitter.emit('connection accepted from %s port %s ' % client_address)
             except:
-                print(sys.stderr, 'Cannot accept connection due to a closed socket state.')
+                self.log_emitter.emit('Cannot accept connection due to a closed socket state.')
                 break
             try:
                 print(sys.stderr, 'connection from', client_address)
@@ -49,23 +56,22 @@ class trigger_server(QtCore.QThread):
                 while True:
                     data = self.connection.recv(128)
                     if data != b'':
-                        self.new_COM.emit(data.decode())
+                        self.socket_emitter.emit(data.decode())
                     # INCOMMING DATA
                     if data:
-                        print(sys.stderr, 'received "%s"' % data)
+                        self.log_emitter.emit('received "%s"' % data)
                        
                     else:
-                        print(sys.stderr, 'no more data from', client_address)
+                        self.log_emitter.emit('no more data from ' + client_address)
                         break
             except:
-                print('Error while listening')
+                self.log_emitter.emit('Error while listening')
             finally:
                 self.close_socket()
         
     def close_socket(self):  
-        print('entro a close socket')
         self.activated = False  
         self.sock.shutdown(socket.SHUT_RDWR)
         self.sock.close()
-        print('socket is closed!')
+        self.log_emitter.emit('Socket is closed!')
         

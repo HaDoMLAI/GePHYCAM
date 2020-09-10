@@ -6,12 +6,12 @@
 @DOI: 10.5281/zenodo.3727503 
 """
 #%%
-from GENERAL.global_constants import constants
 
-class EEG_constants(constants):
+class EEG_constants():
+    
     def __init__(self, seconds=6, sample_rate=250, baud=115200, channels=8, ndims=8, signal='eeg', lowcut=1, highcut=45, order=5):
-        constants.__init__(self, 'OpenBCI')
-        ############### CONSTANTS ######################
+        
+        self.EEG_SECONDS = seconds
         self.SAMPLE_RATE = sample_rate
         self.NOTCH = 50#Hz
         self.BAUD = baud

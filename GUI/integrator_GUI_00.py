@@ -9,6 +9,7 @@
 from EDF import AudioVisual_io_01 as av_file_IO
 from EDF import OpenBCI_writeEDFFile_01 as EEG_file_IO 
 from EDF import E4_writeEDFFile as E4_writter
+from COM.trigger_server_3 import trigger_server
 
 
 from QTDesigner.INTEGRATOR_GUI_01 import  Ui_MainWindow as ui
@@ -23,7 +24,7 @@ import numpy as np
 class GUI(QMainWindow, ui):
     def __init__(self, app, callbacks, parent=None):   
         QMainWindow.__init__(self, parent=parent) 
-        self.app = app;    
+        self.app = app    
         ################    init #############################
         self.curves_EEG = []
         self.lr = None
@@ -31,15 +32,17 @@ class GUI(QMainWindow, ui):
         self.curves_Freq = []
         self.curves_EEG_short = []
         self.last_action = 'stop'
+        self.trigger_server_activated = False
         ### BIOSIGNALS gui design ##############################
         self.setupUi(self)
         ############# callbacks ################################
         #-- General controls --
         self.save_bttn.clicked.connect(callbacks[0])
         self.script_bttn.clicked.connect(callbacks[1])
-        self.trigger_bttn.clicked.connect(lambda: self.launch_trigger_server(self.update_state))
+        self.trigger_bttn.clicked.connect(self.launch_trigger_server)
         self.PORT_SpinBox.valueChanged.connect(lambda: self.set_tcpip())
         self.IP_TextEdit.textChanged.connect(lambda: self.set_tcpip())
+        self.E4_ip_lineEdit.textChanged.connect(lambda: self.set_E4_tcpip())
         self.start_bttn.clicked.connect(lambda: self.check_recording('test'))
         # -- drivers --
         self.E4_server_bttn.clicked.connect(callbacks[2])
@@ -96,9 +99,23 @@ class GUI(QMainWindow, ui):
         elif action == 'test' and not self.app.BCI_streaming.value:
             self.stopTimers()
             self.save_data()
+              
+    def launch_trigger_server(self):
+        if self.trigger_server_activated:
+            self.trigger_server.close_socket()
+            del self.trigger_server
+            self.trigger_server_activated = False
+        else:
+            self.trigger_server = trigger_server(address = self.app.constants.ADDRESS, port = self.app.constants.PORT)
+            self.trigger_server.socket_emitter.connect(self.update_state)
+            self.trigger_server.log_emitter.connect(self.app.log.myprint)
+            self.trigger_server_activated = self.trigger_server.create_socket()
+            if self.trigger_server_activated:
+                self.trigger_server.start()  
+            else:
+                del self.trigger_server
                 
     def update_state(self, action):
-        print('que pasa con last action y action: ', self.last_action, action)
         if action != self.last_action:
             
             self.app.BCI_streaming.value = not self.app.BCI_streaming.value
@@ -120,7 +137,7 @@ class GUI(QMainWindow, ui):
         av_file_IO.write_AV(self.app.video_dmg.get_allData(), self.app.constants.PATH, self.app.constants.TRIAL)
         # -- Empatica E4 FILE IO
         for dmg in self.app.E4_dmgs:
-            E4_writter.create_file(self.app.constants.PATH, self.app.constants.TRIAL, dmg.SIGNAL, dmg.get_allData())
+            E4_writter.create_file(self.app.constants.PATH, self.app.constants.TRIAL, dmg.buffer.SIGNAL, dmg.get_allData())
         # -- OpenBCI FILE IO
         EEG_file_IO.create_file(self.app.constants.PATH, self.app.constants.TRIAL,self.app.eeg_dmg.get_allData())
         print('all data is saved')
@@ -228,7 +245,10 @@ class GUI(QMainWindow, ui):
             self.app.E4_dmgs[2].buffer.set_seconds(int(self.TMP_ComboBox.value()))
         
     def set_tcpip(self):
-        self.app.video_dmg.buffer.set_tcpip(self.IP_TextEdit.toPlainText(), int(self.PORT_SpinBox.value()))      
+        self.app.constants.set_tcpip(self.IP_TextEdit.text(), int(self.PORT_SpinBox.value()))      
+        
+    def set_E4_tcpip(self):
+        self.app.constants.set_E4_tcpip(self.E4_ip_lineEdit.text())   
         
     def set_channel_spectrogram(self):
         self.initFrequencyView()
@@ -256,17 +276,7 @@ class GUI(QMainWindow, ui):
         self.app.eeg_dmg.EEG_buffer.update('seconds', int(self.EEG_ComboBox.value()))
         self.app.eeg_dmg.EEG_buffer.reset(self.app.eeg_dmg.EEG_buffer.WINDOW)
         self.set_plots(reset = True)    
-        
-############### TRIGGER #############################################################
-    def launch_trigger_server(self, callback):
-        if self.app.trigger_server.activated:
-            self.app.trigger_server.close_socket()
-            self.app.log.myprint('Trigger socket closed')
-        else:
-            self.app.trigger_server.create_socket()   
-            self.app.trigger_server.new_COM.connect(callback)
-            self.app.trigger_server.start()
-            self.app.log.myprint('Trigger socket connected on ' + self.app.trigger_server.address + ' ' + str(self.app.trigger_server.port))
+                
 ############ GUI interactions #################################################
     @QtCore.pyqtSlot(bool)  
     def device_connect_slot(self, device_connect):
@@ -310,7 +320,7 @@ class GUI(QMainWindow, ui):
     def init_values(self):
         self.IP_TextEdit.setText(self.app.constants.ADDRESS)
         self.PORT_SpinBox.setProperty("value", self.app.constants.PORT)
-        self.CAM_ComboBox.setProperty("value", self.app.constants.CAMERA_SECONDS)
+        self.CAM_ComboBox.setProperty("value", self.app.video_dmg.buffer.CAMERA_SECONDS)
         self.initQwtCurves()
         self.initLongTermViewCurves()
         self.initShortTermViewCurves()

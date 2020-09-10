@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-@author: %(Mikel Val Calvo)s
-@email: %(mikel1982mail@gmail.com)
-@institution: %(Dpto. de Inteligencia Artificial, Universidad Nacional de Educación a Distancia (UNED))
-@DOI: 10.5281/zenodo.3727503 
-"""
-#%%
+
+# Form implementation generated from reading ui file 'integrator_gui.ui'
+#
+# Created by: PyQt5 UI code generator 5.11.3
+#
+# WARNING! All changes made in this file will be lost!
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from QTDesigner.mplwidget import MplWidget
-from qwt.qt.QtCore import Qt
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -23,22 +21,13 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_4 = QtWidgets.QGroupBox(self.verticalLayoutWidget)
+        self.groupBox_4.setMinimumSize(QtCore.QSize(400, 0))
+        self.groupBox_4.setMaximumSize(QtCore.QSize(4000, 300))
         self.groupBox_4.setObjectName("groupBox_4")
-        
-        
-        
-        #--------------------------------------------------------------
-        self.MplWidget = MplWidget(self.groupBox_4)
-        self.MplWidget.setObjectName("MplWidget")
-        
-        self.verticalLayout_CAM = QtWidgets.QVBoxLayout(self.groupBox_4)
-        self.verticalLayout_CAM.addWidget(self.MplWidget)
+        self.CAM_plot = QtWidgets.QGraphicsView(self.groupBox_4)
+        self.CAM_plot.setGeometry(QtCore.QRect(10, 30, 431, 261))
+        self.CAM_plot.setObjectName("CAM_plot")
         self.verticalLayout.addWidget(self.groupBox_4)
-        #--------------------------------------------------------------
-        
-        
-        
-        
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 210, 881, 721))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
@@ -68,11 +57,9 @@ class Ui_MainWindow(object):
         self.BVP_plot.setMinimumSize(QtCore.QSize(300, 100))
         self.BVP_plot.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.BVP_plot.setFrameShadow(QtWidgets.QFrame.Plain)
-        #-----------------
-        brush = QtGui.QBrush(QtGui.QColor(Qt.black))
+        brush = QtGui.QBrush(QtGui.QColor(10, 10, 10))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        self.BVP_plot.setCanvasBackground(brush)
-        #-----------------
+        self.BVP_plot.setProperty("canvasBackground", brush)
         self.BVP_plot.setObjectName("BVP_plot")
         self.verticalLayout_8.addWidget(self.BVP_plot)
         self.GSR_plot = QwtPlot(self.signals_groupBox)
@@ -82,11 +69,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.GSR_plot.sizePolicy().hasHeightForWidth())
         self.GSR_plot.setSizePolicy(sizePolicy)
         self.GSR_plot.setMinimumSize(QtCore.QSize(300, 100))
-        #-----------------
-        brush = QtGui.QBrush(QtGui.QColor(Qt.black))
+        brush = QtGui.QBrush(QtGui.QColor(10, 10, 10))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        self.GSR_plot.setCanvasBackground(brush)
-        #-----------------
+        self.GSR_plot.setProperty("canvasBackground", brush)
         self.GSR_plot.setObjectName("GSR_plot")
         self.verticalLayout_8.addWidget(self.GSR_plot)
         self.TMP_plot = QwtPlot(self.signals_groupBox)
@@ -96,11 +81,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.TMP_plot.sizePolicy().hasHeightForWidth())
         self.TMP_plot.setSizePolicy(sizePolicy)
         self.TMP_plot.setMinimumSize(QtCore.QSize(300, 100))
-        #-----------------
-        brush = QtGui.QBrush(QtGui.QColor(Qt.black))
+        brush = QtGui.QBrush(QtGui.QColor(10, 10, 10))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        self.TMP_plot.setCanvasBackground(brush)
-        #-----------------
+        self.TMP_plot.setProperty("canvasBackground", brush)
         self.TMP_plot.setObjectName("TMP_plot")
         self.verticalLayout_8.addWidget(self.TMP_plot)
         self.verticalLayout_2.addWidget(self.signals_groupBox)
@@ -169,15 +152,10 @@ class Ui_MainWindow(object):
         self.label_8.setObjectName("label_8")
         self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_8)
         self.trigger_bttn = QtWidgets.QPushButton(self.formLayoutWidget_3)
-        self.trigger_bttn.setMinimumSize(QtCore.QSize(70, 20))
-        self.trigger_bttn.setMaximumSize(QtCore.QSize(70, 20))
+        self.trigger_bttn.setMinimumSize(QtCore.QSize(70, 25))
+        self.trigger_bttn.setMaximumSize(QtCore.QSize(70, 25))
         self.trigger_bttn.setObjectName("trigger_bttn")
         self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.trigger_bttn)
-        self.IP_TextEdit = QtWidgets.QTextEdit(self.formLayoutWidget_3)
-        self.IP_TextEdit.setMinimumSize(QtCore.QSize(100, 20))
-        self.IP_TextEdit.setMaximumSize(QtCore.QSize(100, 20))
-        self.IP_TextEdit.setObjectName("IP_TextEdit")
-        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.IP_TextEdit)
         self.PORT_SpinBox = QtWidgets.QSpinBox(self.formLayoutWidget_3)
         self.PORT_SpinBox.setMinimumSize(QtCore.QSize(70, 20))
         self.PORT_SpinBox.setMaximumSize(QtCore.QSize(50, 20))
@@ -198,6 +176,12 @@ class Ui_MainWindow(object):
         self.formLayout_3.setItem(2, QtWidgets.QFormLayout.FieldRole, spacerItem)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.formLayout_3.setItem(5, QtWidgets.QFormLayout.FieldRole, spacerItem1)
+        self.IP_TextEdit = QtWidgets.QLineEdit(self.formLayoutWidget_3)
+        self.IP_TextEdit.setMinimumSize(QtCore.QSize(0, 20))
+        self.IP_TextEdit.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.IP_TextEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.IP_TextEdit.setObjectName("IP_TextEdit")
+        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.IP_TextEdit)
         self.groupBox_16 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_16.setGeometry(QtCore.QRect(950, 0, 391, 201))
         self.groupBox_16.setObjectName("groupBox_16")
@@ -259,26 +243,28 @@ class Ui_MainWindow(object):
         self.groupBox_12.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.groupBox_12.setObjectName("groupBox_12")
         self.groupBox_13 = QtWidgets.QGroupBox(self.groupBox_12)
-        self.groupBox_13.setGeometry(QtCore.QRect(20, 30, 171, 71))
+        self.groupBox_13.setGeometry(QtCore.QRect(20, 20, 171, 111))
+        self.groupBox_13.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.groupBox_13.setAlignment(QtCore.Qt.AlignCenter)
         self.groupBox_13.setObjectName("groupBox_13")
         self.formLayoutWidget_4 = QtWidgets.QWidget(self.groupBox_13)
-        self.formLayoutWidget_4.setGeometry(QtCore.QRect(0, 20, 171, 51))
+        self.formLayoutWidget_4.setGeometry(QtCore.QRect(0, 20, 171, 91))
         self.formLayoutWidget_4.setObjectName("formLayoutWidget_4")
         self.formLayout_4 = QtWidgets.QFormLayout(self.formLayoutWidget_4)
         self.formLayout_4.setLabelAlignment(QtCore.Qt.AlignCenter)
-        self.formLayout_4.setFormAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.formLayout_4.setFormAlignment(QtCore.Qt.AlignCenter)
         self.formLayout_4.setContentsMargins(0, 0, 0, 0)
         self.formLayout_4.setObjectName("formLayout_4")
         self.E4_server_bttn = QtWidgets.QPushButton(self.formLayoutWidget_4)
         self.E4_server_bttn.setMinimumSize(QtCore.QSize(70, 20))
         self.E4_server_bttn.setMaximumSize(QtCore.QSize(70, 20))
         self.E4_server_bttn.setObjectName("E4_server_bttn")
-        self.formLayout_4.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.E4_server_bttn)
+        self.formLayout_4.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.E4_server_bttn)
         self.refresh_bttn = QtWidgets.QPushButton(self.formLayoutWidget_4)
         self.refresh_bttn.setMinimumSize(QtCore.QSize(70, 20))
         self.refresh_bttn.setMaximumSize(QtCore.QSize(70, 20))
         self.refresh_bttn.setObjectName("refresh_bttn")
-        self.formLayout_4.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.refresh_bttn)
+        self.formLayout_4.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.refresh_bttn)
         self.E4_device_ComboBox = QtWidgets.QComboBox(self.formLayoutWidget_4)
         self.E4_device_ComboBox.setEnabled(True)
         self.E4_device_ComboBox.setMinimumSize(QtCore.QSize(70, 20))
@@ -287,14 +273,20 @@ class Ui_MainWindow(object):
         self.E4_device_ComboBox.setCurrentText("")
         self.E4_device_ComboBox.setIconSize(QtCore.QSize(16, 16))
         self.E4_device_ComboBox.setObjectName("E4_device_ComboBox")
-        self.formLayout_4.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.E4_device_ComboBox)
+        self.formLayout_4.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.E4_device_ComboBox)
         self.E4_connect_bttn = QtWidgets.QPushButton(self.formLayoutWidget_4)
-        self.E4_connect_bttn.setMinimumSize(QtCore.QSize(70, 0))
-        self.E4_connect_bttn.setMaximumSize(QtCore.QSize(70, 17))
+        self.E4_connect_bttn.setMinimumSize(QtCore.QSize(70, 20))
+        self.E4_connect_bttn.setMaximumSize(QtCore.QSize(70, 20))
         self.E4_connect_bttn.setObjectName("E4_connect_bttn")
-        self.formLayout_4.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.E4_connect_bttn)
+        self.formLayout_4.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.E4_connect_bttn)
+        self.E4_ip_lineEdit = QtWidgets.QLineEdit(self.formLayoutWidget_4)
+        self.E4_ip_lineEdit.setMinimumSize(QtCore.QSize(70, 20))
+        self.E4_ip_lineEdit.setMaximumSize(QtCore.QSize(70, 20))
+        self.E4_ip_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.E4_ip_lineEdit.setObjectName("E4_ip_lineEdit")
+        self.formLayout_4.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.E4_ip_lineEdit)
         self.groupBox_14 = QtWidgets.QGroupBox(self.groupBox_12)
-        self.groupBox_14.setGeometry(QtCore.QRect(20, 120, 81, 71))
+        self.groupBox_14.setGeometry(QtCore.QRect(20, 130, 81, 61))
         self.groupBox_14.setObjectName("groupBox_14")
         self.verticalLayoutWidget_3 = QtWidgets.QWidget(self.groupBox_14)
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(0, 30, 81, 31))
@@ -310,7 +302,7 @@ class Ui_MainWindow(object):
         self.OpenBCI_connect_bttn.setObjectName("OpenBCI_connect_bttn")
         self.verticalLayout_6.addWidget(self.OpenBCI_connect_bttn)
         self.groupBox_15 = QtWidgets.QGroupBox(self.groupBox_12)
-        self.groupBox_15.setGeometry(QtCore.QRect(110, 120, 81, 71))
+        self.groupBox_15.setGeometry(QtCore.QRect(110, 130, 81, 61))
         self.groupBox_15.setObjectName("groupBox_15")
         self.verticalLayoutWidget_7 = QtWidgets.QWidget(self.groupBox_15)
         self.verticalLayoutWidget_7.setGeometry(QtCore.QRect(0, 30, 81, 31))
@@ -391,7 +383,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addLayout(self.windowsSize_formLayout_8)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1347, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1347, 32))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -417,17 +409,19 @@ class Ui_MainWindow(object):
         self.trigger_bttn.setText(_translate("MainWindow", "Trigger"))
         self.label_9.setText(_translate("MainWindow", "Start/stop recordings"))
         self.start_bttn.setText(_translate("MainWindow", "Start"))
+        self.IP_TextEdit.setText(_translate("MainWindow", "localhost"))
         self.groupBox_16.setTitle(_translate("MainWindow", "Log"))
         self.controls_groupBox_3.setTitle(_translate("MainWindow", "Filters"))
         self.butterOrder_label_5.setText(_translate("MainWindow", "Butter filter order"))
         self.frequency_label_5.setText(_translate("MainWindow", "EEG Frequency range"))
         self.filtering_label_5.setText(_translate("MainWindow", "EEG Filtering method"))
-        self.Spectrogram_RadioButton.setText(_translate("MainWindow", "Spectrogram"))
+        self.Spectrogram_RadioButton.setText(_translate("MainWindow", "Spectrogra&m"))
         self.groupBox_12.setTitle(_translate("MainWindow", "Drivers"))
         self.groupBox_13.setTitle(_translate("MainWindow", "Empatica E4"))
         self.E4_server_bttn.setText(_translate("MainWindow", "E4 link"))
         self.refresh_bttn.setText(_translate("MainWindow", "Refresh"))
         self.E4_connect_bttn.setText(_translate("MainWindow", "E4"))
+        self.E4_ip_lineEdit.setText(_translate("MainWindow", "localhost"))
         self.groupBox_14.setTitle(_translate("MainWindow", "OpenBCI"))
         self.OpenBCI_connect_bttn.setText(_translate("MainWindow", "OpenBCI"))
         self.groupBox_15.setTitle(_translate("MainWindow", "Camera"))
@@ -438,5 +432,16 @@ class Ui_MainWindow(object):
         self.gsrWindowsSize_label_4.setText(_translate("MainWindow", "GSR [seconds]"))
         self.tmpWindowsSize_label_4.setText(_translate("MainWindow", "TMP [seconds]"))
         self.label_10.setText(_translate("MainWindow", "CAM [seconds]"))
+
 from pyqtgraph import PlotWidget
 from qwt import QwtPlot
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+

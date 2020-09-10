@@ -6,19 +6,20 @@
 @DOI: 10.5281/zenodo.3727503 
 """
 #%%
-from GENERAL.global_constants import constants
-
-class video_constants(constants):
+class video_constants():
     def __init__(self):
-        constants.__init__(self, 'video')
-        # -- initializations --
+        self.CAMERA_SECONDS = 6
         self.fps = 30
         self.device_index = -1
         self.WINDOW = self.fps * self.CAMERA_SECONDS
         self.frameSize = (480,640) 
         self.all_data_shape = (0,480,640,3)     
         self.SHAPE = (self.WINDOW,480,640,3)
-        self.temp = './data/temp_' + str(self.name) + '.avi'
+        self.temp = './data/temp_webcam.avi'
+        
+    def set_seconds(self, seconds):
+        self.CAMERA_SECONDS = seconds
+
         
 
 

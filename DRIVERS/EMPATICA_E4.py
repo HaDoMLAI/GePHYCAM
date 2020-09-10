@@ -142,7 +142,6 @@ class E4_socket(Thread):
         message = 'device_connect '+device+'\r\n'
         self.send_msg(message)
         
-    
     def disconnectDevice(self):
         message = 'device_disconnect\r\n'
         self.send_msg(message)
@@ -159,15 +158,11 @@ class E4_socket(Thread):
         
     def openPort(self, IP, PORT):
         # self.log.myprint("Trying to connect with Empatica server")
-        print('paso 1')
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print('paso 2')
         # self.log.myprint('Create socket')
         server_address = (IP, PORT)
-        print('paso 3')
         # self.log.myprint('Socket on ip and port initialized')
         self.sock.connect(server_address)
-        print('paso 4')
         self.E4_connected.value = True
         # self.log.myprint("Connected to Empatica Server")
         
