@@ -17,7 +17,7 @@ pip install neurodsp
 pip install lspopt
 
 conda install -c conda-forge spectrum 
-pip install pyhrv (Hay que hacer modificaciones en el codigo fuente)
+pip install pyhrv 
 
 pip install pandas
 

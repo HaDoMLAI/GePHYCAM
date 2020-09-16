@@ -13,11 +13,69 @@ format for the audio-visual signals.
 4. Online behaviour labelling interface which labels are synchronised and stored on
 EDF files.
 
-# INSTRUCTIONS:
-1) Install requirements as explained in installation_steps.txt
-2) add permissions: sudo chmod 666 /dev/ttyUSB0 (your serial port)
-3) In the folder ./GENERAL/constants.py tcp/ip ADDRESS must be set: '10.1.25.82' (your IP)
-4) Run MULTIMODAL_APP_00.py
+# DEPENDENCIES:
+```
+PythonQwt
+pyserial
+neurodsp
+PyQt5
+pyqtwebengine
+scikit-learn
+pandas
+ica
+scipy
+pyqtgraph
+pyEDFlib
+PyWavelets
+lspopt
+spectrum
+pyhrv
+opencv-python
+pyedflib
+ffmpeg-python
+```
+
+# USE EXAMPLE:
+1) add permissions: 
+```
+sudo chmod 666 /dev/ttyUSB0 (your serial port)
+```
+2) Run in one terminal:
+```
+python MULTIMODAL_APP_00.py
+```
+3) Set the user filename
+
+4) Set IP and PORT in the app and click the trigger button
+
+5) Run in another terminal:
+```
+python
+```
+6) Create a client
+```
+from COM.trigger_client import trigger_client
+
+tc = trigger_client('IP','PORT')
+tc.create_socket()
+tc.connect()
+```
+Then you are ready to start the recording.
+
+```
+tc.send_msg(b'start')
+```
+Labels can be sent asynchronously during the recording and will be stored as events in the EDF user file.
+
+```
+tc.send_msg(b'happy')
+```
+
+To stop the recording and save the temporal series in the user EDF file.
+
+```
+tc.send_msg(b'stop')
+```
 
 # CITATION:
 @DOI: 10.5281/zenodo.3727503 
