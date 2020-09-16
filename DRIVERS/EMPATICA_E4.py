@@ -129,7 +129,6 @@ class E4_socket(Thread):
             
         # finally           
         self.log.myprint('Killing thread')
-        print('E4 driver is killed')
          
     def set_logger(self, log):
         self.log = log 
@@ -152,7 +151,7 @@ class E4_socket(Thread):
         
     def subscribe(self,action):
         for dmg in self.dmgs:
-            message = 'device_subscribe '+ dmg.SIGNAL + ' ' + action +'\r\n' 
+            message = 'device_subscribe '+ dmg.buffer.SIGNAL + ' ' + action +'\r\n' 
             self.send_msg(message)
             time.sleep(0.1)
         

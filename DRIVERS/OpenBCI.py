@@ -96,8 +96,7 @@ class OpenBCIBoard(Process):
             self.isconnected.value = True
             self.log.myprint('connected!')
         except:
-            print('error al conectar')
-            # self.log.myprint_error("OpenBCI Not connected")
+            self.log.myprint_error("OpenBCI Not connected")
    
     def disconnect(self):
         if self.ser.isOpen():
@@ -124,7 +123,6 @@ class OpenBCIBoard(Process):
         if self.isconnected.value:
             self.disconnect()
         self.exit.set()
-        print('Killing openbci driver')
 #%%        
     def read(self, n):
             bb = self.ser.read(n)

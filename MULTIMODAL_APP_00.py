@@ -94,10 +94,8 @@ class MyApp(QtWidgets.QApplication):
             self.BCI_driver.kill()
     
     def E4_server_link(self):
-        print('E4 server link ', not self.E4_connected.value)
         if not self.E4_connected.value:
             try:
-                print('entro')
                 self.E4_driver = E4_socket(self.E4_connected, 
                                            self.E4_dmgs, 
                                            callbacks=[self.gui.device_list_slot,
@@ -138,7 +136,7 @@ class MyApp(QtWidgets.QApplication):
         fileType = "PYTHON Files (*.py)"
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self.gui,"QFileDialog.getOpenFileName()","",fileType, options=options)       
         #----- LOAD AND EXECUTE THE MODULE -----#
-        print('opening: ', fileName)
+        self.log.myprint_out('Opening file: ' + fileName)
         if fileName:
             Dyn_import.load_module(fileName, self)
             

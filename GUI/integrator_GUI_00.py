@@ -161,9 +161,9 @@ class GUI(QMainWindow, ui):
         self.freq_timer.start(1/250)
         # --Empatica E4
         self.app.E4_driver.pause("OFF")
-        self.bvp_timer.start((1/self.app.E4_dmgs[0].freqTask)*1000)
-        self.gsr_timer.start((1/self.app.E4_dmgs[1].freqTask)*1000)
-        self.tmp_timer.start((1/self.app.E4_dmgs[2].freqTask)*1000)
+        self.bvp_timer.start((1/self.app.E4_dmgs[0].buffer.freqTask)*1000)
+        self.gsr_timer.start((1/self.app.E4_dmgs[1].buffer.freqTask)*1000)
+        self.tmp_timer.start((1/self.app.E4_dmgs[2].buffer.freqTask)*1000)
         # -- Webcam
         self.CAM_timer.start(1/self.app.video_dmg.buffer.fps)
 
@@ -216,6 +216,7 @@ class GUI(QMainWindow, ui):
             self.curves_EEG_short[i].setData(sample[i,:])#
             
     def bvp_update(self):    
+        print('bvp update')
         val = self.app.E4_dmgs[0].getSamples()
         self.BVP_plot.curve.setData(np.arange(len(val)), val[:,1])
         self.BVP_plot.replot()
