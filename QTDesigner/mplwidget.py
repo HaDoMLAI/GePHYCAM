@@ -13,7 +13,7 @@ import pyqtgraph as pg
 # pyqtgraph.examples.run()
 
 
-class MplWidget(QWidget):
+class mplwidget(QWidget):
     
     def __init__ (self, parent = None): 
         QWidget.__init__(self, parent)

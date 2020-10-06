@@ -15,8 +15,8 @@ from COM.trigger_server_3 import trigger_server
 from QTDesigner.INTEGRATOR_GUI_01 import  Ui_MainWindow as ui
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtCore
-from qwt.qt.QtCore import Qt
-from qwt.qt.QtGui import QPen, QFont
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPen, QFont
 from qwt import QwtPlotCurve, QwtPlotItem, QwtText
 import pyqtgraph as pg
 import numpy as np
@@ -155,6 +155,8 @@ class GUI(QMainWindow, ui):
                 
     def startTimers(self):
         ### START TIMERS 
+        # -- Webcam
+        self.CAM_timer.start(1/self.app.video_dmg.buffer.fps)
         # -- OpenBCI
         self.eeg_timer.start(1/250)
         self.eeg_short_timer.start(1/250)
@@ -164,10 +166,11 @@ class GUI(QMainWindow, ui):
         self.bvp_timer.start((1/self.app.E4_dmgs[0].buffer.freqTask)*1000)
         self.gsr_timer.start((1/self.app.E4_dmgs[1].buffer.freqTask)*1000)
         self.tmp_timer.start((1/self.app.E4_dmgs[2].buffer.freqTask)*1000)
-        # -- Webcam
-        self.CAM_timer.start(1/self.app.video_dmg.buffer.fps)
+        
 
     def stopTimers(self):
+        # -- Webcam
+        self.CAM_timer.stop()
         # -- OpenBCI
         self.eeg_timer.stop()
         self.eeg_short_timer.stop()
@@ -177,13 +180,12 @@ class GUI(QMainWindow, ui):
         self.bvp_timer.stop() 
         self.gsr_timer.stop() 
         self.tmp_timer.stop() 
-        # -- Webcam
-        self.CAM_timer.stop()
+        
 
 ######### SIGNAL VISUALIZATION UPDATE MANAGERS ################################ 
     def face_streaming(self):  
         frame = self.app.video_dmg.buffer.get_singleFrame()
-        self.MplWidget.imshow(frame)
+        self.CAM_plot.imshow(frame)
         
     def eeg_update(self):       
         sample = self.app.eeg_dmg.get_sample()
@@ -216,7 +218,6 @@ class GUI(QMainWindow, ui):
             self.curves_EEG_short[i].setData(sample[i,:])#
             
     def bvp_update(self):    
-        print('bvp update')
         val = self.app.E4_dmgs[0].getSamples()
         self.BVP_plot.curve.setData(np.arange(len(val)), val[:,1])
         self.BVP_plot.replot()

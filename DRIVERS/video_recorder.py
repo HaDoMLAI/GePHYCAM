@@ -31,6 +31,7 @@ class VideoRecorder(Process, video_constants):
         try:
             self.video_cap = cv2.VideoCapture(self.device_index)
             self.isconnected.value = True
+            print('Connected to video capture OK!')
         except:
             print('Cannot connect to webcam.')
         
@@ -45,6 +46,7 @@ class VideoRecorder(Process, video_constants):
         while self.exit.is_set():  
             if self.streaming.value:
                 ret, frame = self.video_cap.read()
+                print('capture of frames: ', ret)
                 if ret:
                     self.mutexBuffer.acquire()
                     self.video_queue.put(frame)

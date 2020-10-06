@@ -41,7 +41,7 @@
        <property name="title">
         <string>Image signals</string>
        </property>
-       <widget class="QGraphicsView" name="CAM_plot">
+       <widget class="mplwidget" name="CAM_plot">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -1119,7 +1119,7 @@
      <x>0</x>
      <y>0</y>
      <width>1347</width>
-     <height>32</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>
@@ -1136,6 +1136,11 @@
    <extends>QFrame</extends>
    <header>qwt_plot.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mplwidget</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">mplwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

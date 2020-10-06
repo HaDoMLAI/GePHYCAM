@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         self.groupBox_4.setMinimumSize(QtCore.QSize(400, 0))
         self.groupBox_4.setMaximumSize(QtCore.QSize(4000, 300))
         self.groupBox_4.setObjectName("groupBox_4")
-        self.CAM_plot = QtWidgets.QGraphicsView(self.groupBox_4)
+        self.CAM_plot = mplwidget(self.groupBox_4)
         self.CAM_plot.setGeometry(QtCore.QRect(10, 30, 431, 261))
         self.CAM_plot.setObjectName("CAM_plot")
         self.verticalLayout.addWidget(self.groupBox_4)
@@ -383,7 +383,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addLayout(self.windowsSize_formLayout_8)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1347, 32))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1347, 30))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -433,15 +433,6 @@ class Ui_MainWindow(object):
         self.tmpWindowsSize_label_4.setText(_translate("MainWindow", "TMP [seconds]"))
         self.label_10.setText(_translate("MainWindow", "CAM [seconds]"))
 
+from QTDesigner.mplwidget import mplwidget
 from pyqtgraph import PlotWidget
 from qwt import QwtPlot
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-
